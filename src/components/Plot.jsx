@@ -49,13 +49,11 @@ export default function Plot({data, x, y, idvar}) {
         s.includes(term)
       )
     })
-    console.log({candidate})
     setHover(candidate)
   }
   
   const searchKeyPress = e => {
     if (e.key === 'Enter') {
-      console.log('Hi')
       setSelected(hover)
     }
   }

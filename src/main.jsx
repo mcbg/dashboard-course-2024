@@ -13,7 +13,7 @@ export function getConfigFromAPI(path) {
 export function render(elementId, getConfig) {
   ReactDOM.createRoot(document.getElementById(elementId)).render(
     <React.StrictMode>
-      <App jsonfile='./bypass-data.json' />
+      <App jsonfile='./bypass-data.json' idvar="id" x="log2 fold change" y="negative log10 p-value" />
     </React.StrictMode>
   )
 }

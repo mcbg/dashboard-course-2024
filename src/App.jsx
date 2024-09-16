@@ -20,12 +20,12 @@ function useJSON(url) {
   return({loaded, data})
 }
 
-export function App ({jsonfile}) {
+export function App ({jsonfile, ...rest}) {
   const {loaded, data} = useJSON(jsonfile)
   return(
     <>
     { loaded
-      ? <Plot data={data} idvar="id" x="log2 fold change" y="negative log10 p-value"/>
+      ? <Plot data={data} {...rest}/>
       : <p className="loading-text">Loading...</p>
     }
     </>
