@@ -1,34 +1,13 @@
 import { useState, useCallback } from 'react'
 import { schemeAccent, scaleOrdinal, scaleSequential, scaleLinear, scaleBand, extent, interpolateViridis, schemePastel1} from 'd3'
+import Circle from './Circle.jsx'
+import Link from './Link.jsx'
 import Axes from './Axes.jsx'
 
 // add a margin of `p` percent to the result of d3's extent function
 function addMargin(x, p) {
   const d = (x[1] - x[0]) * p
   return([x[0] - d, x[1] + d])
-}
-
-function Link({label, url}) {
-  return(
-    <>
-      { url ?
-        <a className="drill__button" href={url}>{label}</a> :
-        <br />
-      }
-    </>
-  )
-}
-function Circle({record, r, fill, idvar, x, y, xScale, yScale, onHover, onClick}) {
-  return(
-    <>
-      {
-        record &&
-          <circle cx={xScale(record[x])} cy={yScale(record[y])}
-            onClick={() => onClick(record[idvar])}
-            r={r} fill={fill} />
-      }
-    </>
-  )
 }
 
 export default function Plot({data, x, y, idvar}) {
@@ -99,12 +78,8 @@ export default function Plot({data, x, y, idvar}) {
         <g onMouseLeave = {() => onHover(null)}>
           <g>
             {
-              data.map(record => 
-                <circle key={record[idvar]} cx={xScale(record[x])} cy={yScale(record[y])}
-                  onClick={() => onClick(record[idvar])}
-                  onMouseEnter={() => onHover(record[idvar])}
-                  r={r}
-                  fill="black"/>
+              data.map(record =>
+                <Circle key={record[idvar]} record={record} r={r} fill="black" {...circleCommonProps}/>
               )
             }
           </g>
@@ -114,7 +89,7 @@ export default function Plot({data, x, y, idvar}) {
           </g>
         </g> 
     </svg>
-      <p style={{textAlign: "right"}}>{x}</p>
+    <p style={{textAlign: "right"}}>{x}</p>
   </>
   )
 }
