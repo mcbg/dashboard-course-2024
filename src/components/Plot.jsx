@@ -15,7 +15,11 @@ export default function Plot({data, x, y, idvar, drillvars}) {
 
   const circleCommonProps = { idvar, x, y, xScale, yScale, 
     onHover: setHover, onClick: setSelected}
+
+  // drill info
   const drillRecord = hover ?? selected
+  const drillInfo = drillvars.map(vr =>
+            <p key={vr}>{vr}: <b>{drillRecord ? drillRecord[vr] : '-'}</b></p>)
 
   // search
   const searchHandler = useSearchHandler(data, setHover, () => setSelected(hover))
@@ -30,11 +34,7 @@ export default function Plot({data, x, y, idvar, drillvars}) {
       <div>
         <input placeholder="Search..." {...searchHandler}/>
         <br/>
-        {
-          drillvars.map(vr =>
-            <p key={vr}>{vr}: <b>{drillRecord ? drillRecord[vr] : '-'}</b></p>)
-        }
-      <Link label="UniProt" url={drillRecord ? drillRecord['UniProt'] : null }/>
+        { drillInfo }
       </div>
       <p style={{marginTop: "1rem"}}>{y}</p>
       <svg width = "100%" viewBox={viewbox}>
