@@ -1,27 +1,10 @@
-import { useState, memo, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import Circle from './Circle.jsx'
+import MemoPoints from './MemoPoints.jsx'
 import Link from './Link.jsx'
 import Axes from './Axes.jsx'
 import useScales from '../hooks/useScales.js'
 import useSearchHandler from '../hooks/useSearchHandler.js'
-
-
-// MemoPoints is only redrawn is one of its props are changed
-// This means 
-const MemoPoints = memo(({data, idvar, x, y, r, xScale, yScale, onHover, onClick}) => {
-  console.log('========= POINTS REDRAW ==========')
-  return(
-  <g>
-    {
-      data.map(record =>
-        <Circle key={record[idvar]} record={record} r={r}
-         fill="black" idvar={idvar} x={x} y={y} xScale={xScale} yScale={yScale} 
-         onHover={onHover} onClick={onClick}/>
-      )
-    }
-  </g>
-  )
-})
 
 
 export default function Plot({data, x, y, idvar, drillvars}) {
@@ -57,7 +40,7 @@ export default function Plot({data, x, y, idvar, drillvars}) {
       <svg width = "100%" viewBox={viewbox}>
         <Axes xScale={xScale} yScale={yScale} />
         <g onMouseLeave = {() => setHover(null)}>
-          <MemoPoints data={data} r={r} {...circleCommonProps} />
+          <MemoPoints data={data} fill="black" r={r} {...circleCommonProps} />
           <g>
             <Circle record={hover} r={rSelected} fill="orange" {...circleCommonProps}/>
             <Circle record={selected} r={rSelected} fill="red" {...circleCommonProps}/>
